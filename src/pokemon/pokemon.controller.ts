@@ -11,14 +11,14 @@ import {
 import { PokemonService } from './pokemon.service';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
-import { HttpCode } from '@nestjs/common/decorators';
+// import { HttpCode } from '@nestjs/common/decorators';
 
 @Controller('pokemon')
 export class PokemonController {
   constructor(private readonly pokemonService: PokemonService) {}
 
   @Post()
-  @HttpCode(HttpStatus.OK) // se puede poner 200 o de esta manera
+  // @HttpCode(HttpStatus.OK) // se puede poner 200 o de esta manera
   create(@Body() createPokemonDto: CreatePokemonDto) {
     return this.pokemonService.create(createPokemonDto);
   }
@@ -28,9 +28,9 @@ export class PokemonController {
     return this.pokemonService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pokemonService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.pokemonService.findOne(term);
   }
 
   @Patch(':id')
