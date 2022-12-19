@@ -19,11 +19,13 @@ export class SeedService {
       'http://pokeapi.co/api/v2/pokemon?limit=10',
     );
 
-    data.results.forEach(({ name, url }) => {
+    data.results.forEach(async ({ name, url }) => {
       const segments = url.split('/');
       const no = +segments[segments.length - 2]; // penultima posicion
+
+      const pokemon = await this.pokemonModel.create({ name, no });
     });
 
-    return data.results;
+    return 'Seed Executed';
   }
 }
