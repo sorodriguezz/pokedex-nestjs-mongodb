@@ -32,11 +32,12 @@ export class SeedService {
 
       // insertPromisesArray.push(this.pokemonModel.create({ name, no }));
 
+      // this.pokemonModel.create({ name, no }); //no es apropiado poque depende del foreach
       pokemonToInsert.push({ name, no });
     });
 
-    // await Promise.all(insertPromisesArray);
-    this.pokemonModel.insertMany(pokemonToInsert);
+    // await Promise.all(insertPromisesArray); // con promesas
+    this.pokemonModel.insertMany(pokemonToInsert); // con insertMany
 
     return 'Seed Executed';
   }
