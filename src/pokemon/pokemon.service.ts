@@ -29,7 +29,9 @@ export class PokemonService {
   }
 
   findAll() {
-    return this.pokemonModel.find();
+    return this.pokemonModel.find()
+      .limit( 5 )
+      .skip( 5 );
   }
 
   async findOne(term: string) {
