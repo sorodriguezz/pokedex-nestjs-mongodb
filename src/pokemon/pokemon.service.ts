@@ -9,6 +9,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common/exceptions';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
+import { PaginationDTO } from '../common/dto/pagination.dto';
 
 @Injectable()
 export class PokemonService {
@@ -28,10 +29,17 @@ export class PokemonService {
     }
   }
 
-  findAll() {
+  findAll(paginationDTO: PaginationDTO) {
+
+    const { limit = 10, offset = 0 } = paginationDTO;
+
     return this.pokemonModel.find()
-      .limit( 5 )
-      .skip( 5 );
+      .limit( limit ) // cuantos por cada pagina
+      .skip( offset ) // desde
+      .sort({ // se ordena por numero (no) de forma ascendente
+        no: 1
+      })
+      .select('-__v'); // se quita un campo a mostrar
   }
 
   async findOne(term: string) {
