@@ -31,7 +31,7 @@ export class PokemonService {
 
   findAll(paginationDTO: PaginationDTO) {
 
-    const { limit = 10, offset = 0 } = paginationDTO;
+    const { limit = +process.env.DEFAULT_LIMIT, offset = 0 } = paginationDTO;
 
     return this.pokemonModel.find()
       .limit( limit ) // cuantos por cada pagina
