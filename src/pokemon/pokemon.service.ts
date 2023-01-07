@@ -10,13 +10,20 @@ import {
 } from '@nestjs/common/exceptions';
 import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
 import { PaginationDTO } from '../common/dto/pagination.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PokemonService {
+
+  private defaultLimit: number;
+
   constructor(
     @InjectModel(Pokemon.name)
     private readonly pokemonModel: Model<Pokemon>,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.defaultLimit = configService.get<number>('defaultLimit');
+  }
 
   async create(createPokemonDto: CreatePokemonDto) {
     createPokemonDto.name = createPokemonDto.name.toLowerCase();
@@ -31,7 +38,7 @@ export class PokemonService {
 
   findAll(paginationDTO: PaginationDTO) {
 
-    const { limit = +process.env.DEFAULT_LIMIT, offset = 0 } = paginationDTO;
+    const { limit = this.defaultLimit, offset = 0 } = paginationDTO;
 
     return this.pokemonModel.find()
       .limit( limit ) // cuantos por cada pagina
